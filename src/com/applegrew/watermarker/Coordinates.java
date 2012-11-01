@@ -1,5 +1,4 @@
-package src;
-
+package com.applegrew.watermarker;
 public class Coordinates {
 	
 	private int xCoord;

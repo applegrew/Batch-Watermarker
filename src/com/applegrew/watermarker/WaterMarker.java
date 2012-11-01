@@ -1,10 +1,12 @@
-package src;
-
+package com.applegrew.watermarker;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.ImageWriteException;
 
 public class WaterMarker {
 	
@@ -55,7 +57,7 @@ public class WaterMarker {
 			try {
 				BufferedImage nonWatermarkedImage = imageManipulator.loadImage(targetImagePaths[i]);
 				BufferedImage watermarkedImage = imageManipulator.addWatermark(watermark, nonWatermarkedImage, position, padding);
-				writeFile(watermarkedImage);
+				writeFile(watermarkedImage, targetImagePaths[i]);
 				System.out.println("Processing image: " + targetImagePaths[i]);
 			} catch (IOException e) {
 				System.err.print("Couldn't load file at " + targetImagePaths[i] + " - skipping...");
@@ -63,13 +65,18 @@ public class WaterMarker {
 		}
 	}
 	
-	public void writeFile(BufferedImage image) {
+	public void writeFile(BufferedImage image, File srcImageFile) {
 		String savePath = outputDirectory + "/" + imageName + outputCounter +".jpg";
 		File imageFile = new File(savePath);
 		
 		try {
 			ImageIO.write(image, "jpg", imageFile);
+			imageManipulator.copyImageMetaData(srcImageFile, imageFile);
 		} catch (IOException e) {
+			System.err.print("Couldn't save file number " + outputCounter	 + " - skipping...");
+		} catch (ImageReadException e) {
+			System.err.print("Couldn't read file number " + outputCounter	 + "'s metadata - skipping...");
+		} catch (ImageWriteException e) {
 			System.err.print("Couldn't save file number " + outputCounter	 + " - skipping...");
 		}
 		outputCounter++;

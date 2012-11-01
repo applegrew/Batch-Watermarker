@@ -1,5 +1,4 @@
-package src;
-
+package com.applegrew.watermarker;
 @SuppressWarnings("serial")
 public class InvalidArgumentException extends Exception{
 	

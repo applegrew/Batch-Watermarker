@@ -1,5 +1,4 @@
-package src;
-
+package com.applegrew.watermarker;
 import java.util.Vector;
 
 public class ArgumentParser {
