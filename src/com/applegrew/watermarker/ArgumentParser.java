@@ -3,7 +3,7 @@ import java.util.Vector;
 
 public class ArgumentParser {
 	
-	private final int defaultPadding = 20;
+	private final int defaultPadding = 0;
 	private String defaultPosition = "BOTTOM_RIGHT";
 
 	private String[] targetImageFilePaths;
@@ -66,7 +66,8 @@ public class ArgumentParser {
 		}
 		
 		if (this.minimumRequiredArgumentsNotSet()) {
-			throw new InvalidArgumentException("Expected more arguments.");
+			throw new InvalidArgumentException(
+					"Expected more arguments.\nExample usage: java WaterMarker -watermark logo.png -source My_Pictures/ -padding 38 -position TOP_LEFT");
 		}
 		
 	}
